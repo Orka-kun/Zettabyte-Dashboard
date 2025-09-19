@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import Link from "next/link";
 
-
 interface User {
   id: number;
   name: string;
@@ -37,8 +36,6 @@ const rowVariants = {
 export default function Users() {
   const { data: users, loading, error } = useFetch<User[]>("https://jsonplaceholder.typicode.com/users");
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [triggerError, setTriggerError] = useState(false);
-  const { error: errorTriggered } = useFetch(triggerError ? "https://jsonplaceholder.typicode.com/invalid-users" : "");
 
   if (loading) 
     return  <div className="text-center mt-40">
@@ -50,7 +47,7 @@ export default function Users() {
                 Please wait a moment
               </p>
             </div>;
-  if (error || errorTriggered) return <div className="p-6 text-red-500">{error || errorTriggered || "Unknown error"}</div>;
+  if (error) return <div className="p-6 text-red-500">{error || "Unknown error"}</div>;
 
   return (
     <main className="p-6 bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 min-h-screen text-black">
@@ -107,7 +104,7 @@ export default function Users() {
         {selectedUser && (
           <motion.div
             className="fixed inset-0 bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 bg-opacity-50 flex items-center justify-center z-50"
-            onClick={(e: React.MouseEvent) => setSelectedUser(null)}
+            onClick={() => setSelectedUser(null)}
             initial="hidden"
             animate="visible"
             exit="exit"
@@ -134,4 +131,3 @@ export default function Users() {
     </main>
   );
 }
-

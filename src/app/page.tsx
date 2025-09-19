@@ -8,12 +8,25 @@ import Image from "next/image";
 import { useFetch } from "@/hooks/useFetch";
 import Link from "next/link";
 
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  username: string;
+}
+
+interface Post {
+  id: number;
+  title: string;
+  body: string;
+  userId: number;
+}
+
 export default function Home() {
   const { data: session, status } = useSession();
 
-
-  const { data: users, loading: usersLoading, error: usersError } = useFetch<any[]>("https://jsonplaceholder.typicode.com/users");
-  const { data: posts, loading: postsLoading, error: postsError } = useFetch<any[]>("https://jsonplaceholder.typicode.com/posts");
+  const { data: users, loading: usersLoading, error: usersError } = useFetch<User[]>("https://jsonplaceholder.typicode.com/users");
+  const { data: posts, loading: postsLoading, error: postsError } = useFetch<Post[]>("https://jsonplaceholder.typicode.com/posts");
   const userCount = users ? users.length : 0;
   const postCount = posts ? posts.length : 0;
   const viewCount = Math.floor(Math.random() * 1000) + 500;
@@ -35,7 +48,6 @@ export default function Home() {
       >
 
         <motion.div
-          className="absolute left-20 w-12 h-12 md:w-28 md:h-28"
           initial={{ rotate: 0 }}
           animate={{
             rotate: [0, 360, 0],
@@ -45,6 +57,13 @@ export default function Home() {
             repeat: Infinity,
             repeatDelay: 1,
           }}
+          style={{
+            position: 'absolute',
+            left: '5rem',
+            width: '3rem',
+            height: '3rem',
+          }}
+          className="md:w-28 md:h-28"
         >
           <Image
             src={logo}
@@ -108,7 +127,6 @@ export default function Home() {
       <main className="p-6 bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 min-h-screen text-center">
         <div className="flex justify-between items-center mb-4 ">
           <motion.div
-            className="w-12 h-12 md:w-28 md:h-28"
             initial={{ rotate: 0 }}
             animate={{
               rotate: [0, 360, 0],
@@ -118,6 +136,7 @@ export default function Home() {
               repeat: Infinity,
               repeatDelay: 1,
             }}
+            className="w-12 h-12 md:w-28 md:h-28"
           >
             <Image
               src={logo}
@@ -156,7 +175,6 @@ export default function Home() {
       <div className="flex justify-between items-center mb-4 ">
        
         <motion.div
-          className="w-12 h-12 md:w-28 md:h-28"
           initial={{ rotate: 0 }}
           animate={{
             rotate: [0, 360, 0],
@@ -166,6 +184,7 @@ export default function Home() {
             repeat: Infinity,
             repeatDelay: 1,
           }}
+          className="w-12 h-12 md:w-28 md:h-28"
         >
           <Image
             src={logo}

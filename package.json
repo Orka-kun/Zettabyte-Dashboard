@@ -3,18 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "lint": "eslint",
-    "postinstall": "npm install --legacy-peer-deps",
+    "postinstall": "yarn install",
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
+    "@auth/core": "0.38.0",
     "autoprefixer": "^10.4.21",
     "axios": "^1.12.2",
     "framer-motion": "^10.18.0",
     "next": "15.5.3",
-    "next-auth": "^4.24.11",
+    "next-auth": "5.0.0-beta.14",
     "postcss": "^8.5.6",
     "react": "19.1.0",
     "react-dom": "19.1.0"
@@ -29,5 +29,9 @@
     "eslint-config-next": "15.5.3",
     "tailwindcss": "^4.1.13",
     "typescript": "^5"
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/Orka-kun/Zettabyte-Dashboard.git",
+  "author": "Orka Dasgupta <orkadas@gmail.com>",
+  "license": "MIT"
 }

@@ -2,7 +2,7 @@
 
 import { useFetch } from "@/hooks/useFetch";
 import Link from "next/link";
-
+import { use } from "react";
 
 interface Post {
   id: number;
@@ -10,18 +10,22 @@ interface Post {
   body: string;
 }
 
-export default function PostDetail({ params }: { params: { id: string } }) {
-  const { data: post, loading, error } = useFetch<Post>(`https://jsonplaceholder.typicode.com/posts/${params.id}`);
+export default function PostDetail({ params }: { params: Promise<{ id: string }> }) {
 
-  if (loading) return <div className="text-center mt-40">
-            <div
-              className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-yellow-500 mx-auto">
-            </div>
-            <h2 className="text-zinc-900 dark:text-white mt-4">Loading...</h2>
-            <p className="text-zinc-600 dark:text-zinc-400">
-              Please wait for a moment
-            </p>
-          </div>;
+  const { id } = use(params);
+  
+  const { data: post, loading, error } = useFetch<Post>(
+    `https://jsonplaceholder.typicode.com/posts/${id}`
+  );
+
+  if (loading)
+    return (
+      <div className="text-center mt-40">
+        <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-yellow-500 mx-auto"></div>
+        <h2 className="text-zinc-900 dark:text-white mt-4">Loading...</h2>
+        <p className="text-zinc-600 dark:text-zinc-400">Please wait for a moment</p>
+      </div>
+    );
   if (error) return <div className="p-6 text-red-500">{error}</div>;
 
   return (

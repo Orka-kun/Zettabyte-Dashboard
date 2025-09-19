@@ -4,8 +4,6 @@ import Card from "@/components/Card";
 import { useFetch } from "@/hooks/useFetch";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { useState } from "react";
-
 
 interface Post {
   id: number;
@@ -21,11 +19,9 @@ const postVariants = {
 
 export default function Posts() {
   const { data: posts, loading, error } = useFetch<Post[]>("https://jsonplaceholder.typicode.com/posts");
-  const [triggerError, setTriggerError] = useState(false);
-  const { error: errorTriggered } = useFetch(triggerError ? "https://jsonplaceholder.typicode.com/invalid-posts" : "");
 
   if (loading) return <div className="p-6">Loading posts...</div>;
-  if (error || errorTriggered) return <div className="p-6 text-red-500">{error || errorTriggered || "Unknown error"}</div>;
+  if (error) return <div className="p-6 text-red-500">{error || "Unknown error"}</div>;
 
   return (
     <main className="p-6 bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100">
