@@ -1,8 +1,31 @@
+# Netlify build configuration for Next.js 15 App Router
+
 [build]
+  # Build command: install dependencies and build production Next.js app
   command = "yarn install --ignore-optional --prefer-offline && yarn build"
+  # Publish folder for Next.js production output
   publish = ".next"
 
+# Environment variables for build
 [build.environment]
+  # Use stable Node version
   NODE_VERSION = "18"
+  # Increase memory for Node.js build process
   NODE_OPTIONS = "--max-old-space-size=4096"
+  # Cache Yarn dependencies to reduce install time
   YARN_CACHE_FOLDER = "/opt/build/cache/yarn"
+  # Optional: force Yarn to be deterministic
+  YARN_FLAGS = "--frozen-lockfile"
+
+# Optional headers for Next.js (if needed)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Enable caching for static assets
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Optional redirect to support Next.js routing
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/next"
+  status = 200
