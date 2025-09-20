@@ -9,7 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@auth/core": "0.38.0",
+    "@auth/core": "0.40.0",
     "autoprefixer": "^10.4.21",
     "axios": "^1.12.2",
     "framer-motion": "^10.18.0",
